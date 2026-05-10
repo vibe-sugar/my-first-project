@@ -27,6 +27,8 @@
 ```
 webapp/
 ├── main.py                        # 메인 실행 진입점
+├── build.bat                      # Windows EXE 빌드 배치 파일
+├── requirements.txt               # 패키지 의존성 목록
 ├── README.md                      # 프로젝트 문서
 ├── environment.txt                # 개발 환경 및 모듈 정보
 ├── log.txt                        # 실행 로그 (자동 생성)
@@ -69,6 +71,56 @@ source venv/bin/activate
 > ```bash
 > sudo apt-get install python3-tk
 > ```
+
+---
+
+## 🏗️ EXE 빌드 방법 (Windows)
+
+> **전제 조건**: Windows 환경, Python 3.12 설치됨
+
+### 한 번에 빌드 (권장)
+
+프로젝트 루트에서 `build.bat`을 더블클릭하거나, 명령 프롬프트(cmd)에서 실행하세요.
+
+```bat
+build.bat
+```
+
+`build.bat`은 아래 단계를 자동으로 수행합니다:
+
+| 단계 | 작업 내용 |
+|------|-----------|
+| 1 | Python 설치 여부 확인 |
+| 2 | 가상환경(`venv`) 생성 및 활성화 |
+| 3 | `requirements.txt` 기반 패키지 자동 설치 (PyInstaller 포함) |
+| 4 | 이전 빌드 결과물(`dist/`, `build/`) 정리 |
+| 5 | PyInstaller로 단일 EXE 파일 빌드 |
+
+빌드가 완료되면 `dist\Calculator.exe` 파일이 생성됩니다.  
+Python 없이도 Windows에서 바로 실행할 수 있습니다.
+
+### 수동 빌드
+
+```bat
+:: 가상환경 생성 및 활성화
+python -m venv venv
+venv\Scripts\activate
+
+:: 패키지 설치
+pip install -r requirements.txt
+
+:: PyInstaller 빌드
+pyinstaller --onefile --windowed --name "Calculator" --add-data "calculator;calculator" main.py
+```
+
+### 빌드 결과물 위치
+
+```
+dist\Calculator.exe   ← 배포용 단일 실행 파일
+```
+
+> ⚠️ `build\`, `dist\`, `*.spec` 파일은 빌드 산출물이므로 배포 시 불필요합니다.  
+> 배포는 `dist\Calculator.exe` 파일 하나만 전달하면 됩니다.
 
 ---
 
@@ -147,6 +199,7 @@ python main.py
 - **최대 입력 자릿수**: 정수부 기준 15자리까지 입력 가능합니다.
 - **GUI 환경 필요**: 디스플레이(모니터)가 연결된 환경에서만 실행 가능합니다.
 - **tkinter 설치**: Linux 일부 환경에서 별도 설치가 필요할 수 있습니다.
+- **EXE 빌드**: `build.bat`은 Windows 전용입니다. macOS/Linux에서는 수동으로 PyInstaller를 실행하세요.
 
 ---
 
@@ -161,6 +214,14 @@ A. 프로젝트 루트의 `log.txt` 파일을 열어보세요. 모든 계산 과
 
 **Q. 소수점 이하 자릿수가 너무 많아요.**  
 A. `decimal` 모듈을 사용하여 최대 28자리 정밀도로 계산됩니다. 결과값의 불필요한 0은 자동으로 제거됩니다.
+
+**Q. build.bat 실행 시 "Python이 설치되어 있지 않다"고 나옵니다.**  
+A. Python 설치 시 **"Add Python to PATH"** 옵션을 체크했는지 확인하세요.  
+또는 명령 프롬프트에서 `python --version`을 실행해 경로 등록 여부를 확인하세요.
+
+**Q. EXE 파일이 백신 프로그램에 차단됩니다.**  
+A. PyInstaller로 빌드한 EXE는 일부 백신에서 오탐(False Positive)될 수 있습니다.  
+백신의 예외 목록에 `dist\Calculator.exe`를 추가하거나, 소스 코드에서 직접 빌드해 사용하세요.
 
 ---
 
