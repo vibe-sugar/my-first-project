@@ -1,0 +1,101 @@
+============================================================
+  계산기 프로그램 (GUI Calculator) - 개발 환경 정보
+  작성일: 2026-05-10
+  버전: 1.0.0
+============================================================
+
+1. Python 버전
+------------------------------------------------------------
+  Python 3.12.x (권장)
+  최소 지원 버전: Python 3.8 이상
+
+2. 사용된 라이브러리 (표준 라이브러리 - 별도 설치 불필요)
+------------------------------------------------------------
+  - tkinter       : GUI 위젯 라이브러리 (Python 내장)
+  - decimal       : 고정밀 소수점 연산 (Python 내장)
+  - logging       : 로그 기록 (Python 내장)
+  - os            : 파일 경로 처리 (Python 내장)
+  - sys           : 시스템 설정 (Python 내장)
+  - datetime      : 타임스탬프 생성 (Python 내장)
+
+  ※ 외부 패키지(pip 설치) 없이 실행 가능합니다.
+
+3. 개발 환경 구축 방법
+------------------------------------------------------------
+  [Step 1] Python 3.12 설치
+    - 공식 사이트: https://www.python.org/downloads/
+    - 설치 시 "Add Python to PATH" 옵션 체크 (Windows)
+
+  [Step 2] tkinter 설치 확인
+    - Windows / macOS: Python 설치 시 기본 포함
+    - Linux (Ubuntu/Debian):
+        sudo apt-get update
+        sudo apt-get install python3-tk
+
+  [Step 3] 가상환경 생성 (권장)
+    python -m venv venv
+
+  [Step 4] 가상환경 활성화
+    - Windows:
+        venv\Scripts\activate
+    - macOS / Linux:
+        source venv/bin/activate
+
+  [Step 5] tkinter 동작 확인
+    python -c "import tkinter; tkinter._test()"
+    → 작은 테스트 창이 열리면 정상
+
+  [Step 6] 프로그램 실행
+    python main.py
+
+4. 모듈 설치 명령어
+------------------------------------------------------------
+  이 프로그램은 외부 모듈을 사용하지 않으므로
+  pip install 명령어가 필요하지 않습니다.
+
+  (향후 확장 시 예시)
+  pip install pillow     # 이미지 처리 (아이콘 추가 시)
+  pip install pyinstaller # 실행 파일 빌드 시
+
+5. 실행 파일 빌드 (PyInstaller)
+------------------------------------------------------------
+  [Step 1] PyInstaller 설치
+    pip install pyinstaller
+
+  [Step 2] 단일 실행 파일 빌드 (Windows .exe)
+    pyinstaller --onefile --windowed --name "Calculator" main.py
+
+  [Step 3] 아이콘 포함 빌드 (아이콘 파일 있을 경우)
+    pyinstaller --onefile --windowed --icon=icon.ico --name "Calculator" main.py
+
+  [Step 4] 빌드 결과물 위치
+    dist/Calculator.exe   (Windows)
+    dist/Calculator       (macOS / Linux)
+
+  주요 옵션 설명:
+    --onefile     : 단일 실행 파일로 패키징
+    --windowed    : 콘솔 창 없이 GUI만 실행 (-w 와 동일)
+    --name        : 출력 파일명 지정
+    --icon        : 실행 파일 아이콘 설정 (.ico 파일)
+    --add-data    : 추가 리소스 파일 포함
+
+6. 로그 파일 위치
+------------------------------------------------------------
+  실행 시 프로젝트 루트에 log.txt 자동 생성
+  경로: webapp/log.txt
+
+  로그 포맷:
+    [YYYY-MM-DD HH:MM:SS] [LEVEL] 메시지
+
+  로그 레벨:
+    INFO  - 실행 흐름, 계산 결과
+    DEBUG - 버튼 클릭 등 상세 이벤트
+    ERROR - 오류 발생 내용
+
+7. 운영체제별 테스트 환경
+------------------------------------------------------------
+  - Windows 10 / 11
+  - macOS 13 (Ventura) 이상
+  - Ubuntu 22.04 LTS
+
+============================================================
